@@ -8,7 +8,7 @@ from sklearn.metrics import classification_report
 import matplotlib.pyplot as plt
 import pickle
 import pathlib
-code_dir = str(pathlib.Path(__file__).parent.resolve())
+code_dir = str(pathlib.Path(__file__).parent.resolve())+"/"
 
 
 st.set_page_config(
