@@ -7,6 +7,8 @@ from models import plot_confusion_matrix
 from sklearn.metrics import classification_report
 import matplotlib.pyplot as plt
 import pickle
+import pathlib
+code_dir = pathlib.Path(__file__).parent.resolve()
 
 
 st.set_page_config(
@@ -105,8 +107,8 @@ def  main():
                 x_in =[edad_diagnostico] + genes_selected
                 df_x_in = pd.DataFrame([x_in], columns=['Age_at_diagnosis']+lista_genes)
                 st.write(df_x_in)
-                PATH_MODEL  ='../models/svm_reduced.sav'
-                ENCODER_PATH = '../models/encoder_reduced.pickle'
+                PATH_MODEL  =code_dir+'models/svm_reduced.sav'
+                ENCODER_PATH =code_dir+ 'models/encoder_reduced.pickle'
                 svm_clase = SVM_glioma(PATH_MODEL,ENCODER_PATH)
                 predict = svm_clase.predict(df_x_in)
                 if predict[0] == 0:
@@ -132,8 +134,8 @@ def  main():
                     ] + genes_selected
                 df_x_in = pd.DataFrame([x_in], columns=['Gender','Age_at_diagnosis', 'Race']+lista_genes)
                 st.write(df_x_in)
-                PATH_MODEL  ='../models/svm.sav'
-                ENCODER_PATH = '../models/encoder.pickle'
+                PATH_MODEL  ='models/svm.sav'
+                ENCODER_PATH = 'models/encoder.pickle'
                 svm_clase = SVM_glioma(PATH_MODEL,ENCODER_PATH)
                 predict = svm_clase.predict(df_x_in)
                 if predict[0] == 0:
@@ -150,8 +152,8 @@ def  main():
             st.write(dataframe)
         grade_dic = {0:'LGG',1:'GBM'}
         if st.button("Hacer predicción"): 
-            PATH_MODEL  ='../models/svm.sav'
-            ENCODER_PATH = '../models/encoder.pickle'
+            PATH_MODEL  =code_dir+'models/svm.sav'
+            ENCODER_PATH = code_dir+'models/encoder.pickle'
             svm_clase = SVM_glioma(PATH_MODEL,ENCODER_PATH)
             predict = svm_clase.predict(dataframe)
             dataframe['Grade'] = pd.Series(predict).replace(grade_dic)
@@ -160,8 +162,8 @@ def  main():
 def metricas():
     st.header("""Predicción del grado de glioma""",divider='rainbow') 
     target_names = ['LGG','GBM']
-    y_true = pd.read_excel("../models/ytest.xlsx").drop(columns='Unnamed: 0')
-    y_pred = pd.read_excel("../models/ypred.xlsx").drop(columns='Unnamed: 0')
+    y_true = pd.read_excel(code_dir+"models/ytest.xlsx").drop(columns='Unnamed: 0')
+    y_pred = pd.read_excel(code_dir+"models/ypred.xlsx").drop(columns='Unnamed: 0')
     col1, col2 = st.columns([1, 1])
     col1.write("##")
     col1.write("##")
@@ -172,7 +174,7 @@ def metricas():
     ).transpose().round(2))
     col2.pyplot(figure)
     st.divider()
-    st.image('../models/shap_summary.svg', caption='Importancia de variables con Shap')
+    st.image(code_dir+'models/shap_summary.svg', caption='Importancia de variables con Shap')
     st.divider()
     
 
