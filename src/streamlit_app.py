@@ -162,8 +162,8 @@ def  main():
 def metricas():
     st.header("""Predicción del grado de glioma""",divider='rainbow') 
     target_names = ['LGG','GBM']
-    y_true = pd.read_excel(code_dir+"models/ytest.xlsx").drop(columns='Unnamed: 0')
-    y_pred = pd.read_excel(code_dir+"models/ypred.xlsx").drop(columns='Unnamed: 0')
+    y_true = pd.read_excel(f"{code_dir}mmodels/ytest.xlsx").drop(columns='Unnamed: 0')
+    y_pred = pd.read_excel(f"{code_dir}models/ypred.xlsx").drop(columns='Unnamed: 0')
     col1, col2 = st.columns([1, 1])
     col1.write("##")
     col1.write("##")
@@ -174,7 +174,7 @@ def metricas():
     ).transpose().round(2))
     col2.pyplot(figure)
     st.divider()
-    st.image(code_dir+'models/shap_summary.svg', caption='Importancia de variables con Shap')
+    st.image(f'{code_dir}models/shap_summary.svg', caption='Importancia de variables con Shap')
     st.divider()
     
 
