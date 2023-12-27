@@ -1,3 +1,9 @@
 streamlit==1.11.1
 streamlit_option_menu==0.3.2
 matplotlib==3.8.2
+pickle
+seaborn
+sklearn
+xgboost
+functools
+
